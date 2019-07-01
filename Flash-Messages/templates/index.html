@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Flash messages</title>
+  </head>
+  <body>
+    <h1>This is flash test</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <h2>{{message}}</h2>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </body>
+</html>
