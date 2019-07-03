@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Firebase Test</title>
+  </head>
+  <body>
+    <form class="form" action="/" method="post">
+      <input type="text" name="name" required>
+      <button type="submit">Submit</button>
+    </form>
+    {% for data in t %}
+      <li>{{data}}</li>
+    {% endfor %}
+
+  </body>
+</html>
