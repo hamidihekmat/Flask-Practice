@@ -28,6 +28,7 @@ def index():
         db.child('todo').push(name)
         todo = db.child('todo').get()
         to = todo.val()
+        print(todo)
         return render_template('index.html', t=to.values())
     return render_template('index.html')
 
