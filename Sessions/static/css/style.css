@@ -18,6 +18,26 @@ h1 {
     color: #fff;
 }
 
+.flashes li {
+    list-style-type: none;
+
+}
+
+.flashes {
+    margin-top: 10px;
+    font-family: 'Nunito',
+        sans-serif;
+    width: 100%;
+    font-size: 16px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+    border: 1px solid #000;
+    color: #FF6F61;
+    text-align: center;
+}
+
 .container {
     display: grid;
     grid-auto-flow: row;
