@@ -3,6 +3,7 @@
 from flask import Flask, session, request, render_template, url_for, redirect, flash
 from os import urandom
 import jwt
+import datetime
 
 app = Flask(__name__)
 app.secret_key = urandom(24)
@@ -11,17 +12,20 @@ app.secret_key = urandom(24)
 @app.route('/', methods=['Get', 'Post'])
 def home():
     if request.method == 'POST':
-        session.pop('user', None)
         password = request.form['password']
         if password == 'hekmat':
-            session['user'] = jwt.encode({'name': 'user'}, app.secret_key)
+            session['user'] = jwt.encode({'exp': datetime.datetime.utcnow(
+            ) + datetime.timedelta(seconds=30)}, app.secret_key)
             return redirect(url_for('protected'))
         if password != 'hekmat':
             flash('You\'ve entered the wrong password!', 'error')
             return redirect(url_for('home'))
-    if request.method == 'GET' and 'user' in session:
-        return '<h1>Already Logged In</h1>'
-
+    if request.method == 'GET':
+        try:
+            jwt.decode(session['user'], app.secret_key)
+            return redirect(url_for('protected'))
+        except:
+            return render_template('index.html')
     return render_template('index.html')
 
 
@@ -31,8 +35,8 @@ def protected():
         jwt.decode(session['user'], app.secret_key)
         return session['user']
     except:
-        return '<h1>You are not authorized</h1>'
-    return '<h1>Your are not logged in!</h1>'
+        return '<h1>You are not authorized</h1>', 403
+    return redirect(url_for('home'))
 
 
 @app.route('/logout')
